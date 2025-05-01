@@ -1,18 +1,16 @@
 { config, pkgs, ... }:
 {
-  devShells = {
-    default = pkgs.mkShell {
-      name = "nextjs";
-      meta.description = "Development Environment";
-      inputsFrom = [
+  devshells.default = (
+    args: {
+      packages = with pkgs; [
+        typescript-language-server
+        vscode-langservers-extracted
+        nodejs_23
+        nil
+      ];
+      packagesFrom = [
         config.treefmt.build.devShell
       ];
-      packages = builtins.attrValues {
-        inherit (pkgs)
-          typescript-language-server
-          nodejs_23
-          ;
-      };
-    };
-  };
+    }
+  );
 }

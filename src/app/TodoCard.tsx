@@ -10,11 +10,11 @@ export type Todo = {
 
 export default function TodoCard(props: { todo: Todo }) {
   const [todo, setTodo] = useState(props.todo);
-  const checkedRef = useRef<HTMLInputElement>(null);
+  const inputCheckboxRef = useRef<HTMLInputElement>(null);
   const controller = useRef(new AbortController());
 
   const handleUpdateTodo = useCallback(async () => {
-    const completed = checkedRef.current?.checked;
+    const completed = inputCheckboxRef.current?.checked;
 
     // return early if no reference to input
     if (completed == null) return;
@@ -46,7 +46,7 @@ export default function TodoCard(props: { todo: Todo }) {
       if (!(err instanceof DOMException) || err.name != "AbortError")
         console.error(err);
     }
-  }, [setTodo]);
+  }, [todo, setTodo]);
 
   return (
     <div className="bg-(--background) rounded-lg px-[20px] py-[10px] flex justify-between shadow-md/50 shadow-(color:--background)">
@@ -61,7 +61,7 @@ export default function TodoCard(props: { todo: Todo }) {
         type="checkbox"
         checked={todo.completed}
         onChange={handleUpdateTodo}
-        ref={checkedRef}
+        ref={inputCheckboxRef}
       />
     </div>
   );

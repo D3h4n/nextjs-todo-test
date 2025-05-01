@@ -28,4 +28,4 @@ language-servers = [ "typescript-language-server", "eslint" ]
 [[language]]
 name = "nix"
 auto-format = true
-formatter = { command = "treefmt", args = ["--stdin"] }
+formatter = { command = "treefmt", args = ["--stdin", "foo.nix"] } # provide fake file with ext to tell treefmt which filetype is being formatted

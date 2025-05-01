@@ -16,16 +16,16 @@ problems = { shortenToSingleLine = false }
 [[language]]
 name = "typescript"
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "typescript"] }
+formatter = { command = "treefmt", args = ["--stdin", "foo.ts"] } # provide fake file with ext to tell treefmt which filetype is being formatted
 language-servers = [ "typescript-language-server", "eslint" ]
 
 [[language]]
 name = "tsx"
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "typescript"] }
+formatter = { command = "treefmt", args = ["--stdin", "foo.tsx"] }
 language-servers = [ "typescript-language-server", "eslint" ]
 
 [[language]]
 name = "nix"
 auto-format = true
-formatter = { command = "treefmt", args = ["--stdin", "foo.nix"] } # provide fake file with ext to tell treefmt which filetype is being formatted
+formatter = { command = "treefmt", args = ["--stdin", "foo.nix"] }

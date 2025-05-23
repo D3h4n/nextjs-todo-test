@@ -4,7 +4,7 @@ export default async function Todos() {
   const todos: Todo[] = await fetch(
     "https://jsonplaceholder.typicode.com/todos",
   ).then((res) => res.json());
-  await new Promise<void>((res) => setTimeout(() => res(), 2000));
+  await new Promise<void>((res) => setTimeout(() => res(), 3000));
 
   return (
     <div className="bg-white p-[1em] rounded-lg">

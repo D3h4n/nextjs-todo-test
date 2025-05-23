@@ -12,6 +12,7 @@ export default function TodoCard(props: { todo: Todo }) {
   const [todo, setTodo] = useState(props.todo);
   const inputCheckboxRef = useRef<HTMLInputElement>(null);
   const controller = useRef(new AbortController());
+  const networkDelay = 3 * 1000; // 3 second simulated network delay
 
   const handleUpdateTodo = useCallback(async () => {
     const completed = inputCheckboxRef.current?.checked;
@@ -39,8 +40,20 @@ export default function TodoCard(props: { todo: Todo }) {
           signal,
         },
       );
-      await new Promise<void>((res) => setTimeout(() => res(), 2000)); // simulate network delay
-      const result = await response.json();
+      // simulate network delay
+      await new Promise<void>((res, rej) => {
+        // reject immediately if signal already aborted
+        if (signal.aborted) {
+          rej(signal.reason);
+          return;
+        }
+        const timeout = setTimeout(res, networkDelay);
+        signal.addEventListener("abort", (e) => {
+          clearTimeout(timeout);
+          rej(e);
+        });
+      });
+      const result: Todo = await response.json();
       setTodo(result);
     } catch (err) {
       if (!(err instanceof DOMException) || err.name != "AbortError")
